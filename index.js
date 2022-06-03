@@ -1,5 +1,5 @@
 // setup your server here
-var server = require("express");
+var express = require("express");
 var cors = require("cors");
 var app = express();
 var bodyParser = require("body-parser");
