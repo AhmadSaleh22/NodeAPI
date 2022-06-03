@@ -1,5 +1,7 @@
+var generator = require("../utils/generator");
 exports.getAllNotes = (req, res) => {
-  res.send("Get All Notes");
+  var generateSt = generator.generate();
+  res.send("Get All Notes " + generateSt);
 };
 
 exports.saveNote = (req, res) => {
