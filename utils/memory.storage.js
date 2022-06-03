@@ -1,6 +1,6 @@
 var MemoryStorage = require("memorystorage");
 // here, the MemoryStorage function is available
-var noteStorage = new MemoryStorage("notes");
+var store = new MemoryStorage("notes");
 
 exports.getKeys = () => {
   var keys = [];
