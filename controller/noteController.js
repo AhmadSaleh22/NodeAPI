@@ -3,25 +3,35 @@ var memoryStorage = require("../utils/memory.storage");
 var model = require("../model/node.model");
 
 exports.getAllNotes = (req, res) => {
-  var generateSt = generator.generate();
-  memoryStorage.store.setItem(generateSt, "It's key");
-
-  var generateSe = generator.generate();
-  memoryStorage.store.setItem(generateSe, "It's second Key'");
-
-  var keys = memoryStorage.getKeys(memoryStorage.store);
-  var values = memoryStorage.getValues(memoryStorage.store);
-  console.log("get all notes values", JSON.stringify(values));
-  var Note = model.Note;
-  var noteObj = new Note(generateSt, "lkfd", "values", "klfg", new Date());
-  res.send("Get All Notes " + JSON.stringify(noteObj));
+  //   var generateSt = generator.generate();
+  //   memoryStorage.store.setItem(generateSt, "It's key");
+  //   var generateSe = generator.generate();
+  //   memoryStorage.store.setItem(generateSe, "It's second Key'");
+  //   var keys = memoryStorage.getKeys(memoryStorage.store);
+  //   var values = memoryStorage.getValues(memoryStorage.store);
+  //   console.log("get all notes values", JSON.stringify(values));
+  //   var Note = model.Note;
+  //   var noteObj = new Note(generateSt, "lkfd", "values", "klfg", new Date());
+  //   res.send("Get All Notes " + JSON.stringify(noteObj));
+  res.send("Get All Notes ");
 };
 
 exports.saveNote = (req, res) => {
   //   res.send("Save Notes");
   var generateID = generator.generate();
   var title = req.body.title;
+  var createdBy = "Ahmad Saleh";
+  var createdAt = new Date();
   var content = req.body.content;
+  if (!title || !content) {
+    return res
+      .status(500)
+      .send({ error: "Please enter a title and check the content." });
+  }
+  var Note = model.Note;
+  var noteObj = new Note(generateID, title, content, createdBy, createdAt);
+  memoryStorage.store.setItem(generateID, noteObj);
+  return res.status(201).send(noteObj);
 };
 
 exports.updateNote = (req, res) => {
