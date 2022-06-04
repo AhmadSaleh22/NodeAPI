@@ -53,10 +53,12 @@ exports.updateNote = (req, res) => {
       .send({ error: "Please enter a title and check the content." });
   }
 
-  // TODO: ADD Functionality to check title if exist or not
-  //   else if(title){
+  // ADD Functionality to validate if note exists
 
-  //   }
+  var existId = memoryStorage.store.getItem(Id);
+  if (!existId) {
+    return res.status(500).send("The Note is not exists");
+  }
 
   var Note = model.Note;
   var noteObj = new Note(Id, title, content, createdBy, createdAt);
