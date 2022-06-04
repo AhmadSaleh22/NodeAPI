@@ -57,7 +57,7 @@ exports.updateNote = (req, res) => {
 
   var existId = memoryStorage.store.getItem(Id);
   if (!existId) {
-    return res.status(500).send("The Note is not exists");
+    return res.status(500).send({ error: "The Note is not exists" });
   }
 
   var Note = model.Note;
@@ -67,5 +67,21 @@ exports.updateNote = (req, res) => {
 };
 
 exports.deleteNote = (req, res) => {
-  res.send("delete the note");
+  var Id = req.params.noteId;
+
+  // check if no id added to the param
+  if (!Id) {
+    return res
+      .status(500)
+      .send({ error: "There is no Id added to the params" });
+  }
+
+  // check if note exists
+  var existId = memoryStorage.store.getItem(Id);
+  if (!existId) {
+    return res.status(500).send({ error: "The Note is not exists" });
+  }
+
+  memoryStorage.store.removeItem(Id);
+  return res.status(200).send({ success: "Note deleted" });
 };
